@@ -8,19 +8,6 @@ variable "stack_id" {
     default = "hashistack"
 }
 
-variable "hcp_client_id" {
-    type = string
-}
-
-variable "hcp_client_secret" {
-  type = string
-  sensitive = true
-}
-
-variable "hcp_project_id" {
-  type = string
-}
-
 variable "boundary_admin_username" {
   type = string
 }
@@ -28,4 +15,8 @@ variable "boundary_admin_username" {
 variable "boundary_admin_password" {
   type = string
   sensitive = true
+}
+
+variable "my_email" {
+  type = string
 }

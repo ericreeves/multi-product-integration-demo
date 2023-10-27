@@ -10,10 +10,7 @@ terraform {
       version = "~> 5.8.0"
     }
 
-    hcp = {
-      source  = "hashicorp/hcp"
-      version = "~> 0.66.0"
-    }
+
   }
 }
 
@@ -29,12 +26,6 @@ provider "aws" {
   token      = data.doormat_aws_credentials.creds.token
 }
 
-provider "hcp" {
-  client_id = var.hcp_client_id
-  client_secret = var.hcp_client_secret
-  project_id = var.hcp_project_id
-}
-
 module "networking" {
   source = "./networking"
   region = var.region
@@ -47,4 +38,16 @@ module "hcp_clusters" {
   hvn_id = module.networking.hvn_id
   boundary_admin_username = var.boundary_admin_username
   boundary_admin_password = var.boundary_admin_password
+}
+
+module "boundary_config" {
+  source = "./boundary-config"
+  region = var.region
+  stack_id = var.stack_id
+  vault_token = module.hcp_clusters.vault_token
+  vault_addr = module.hcp_clusters.vault_addr
+  boundary_addr = module.hcp_clusters.boundary_addr
+  boundary_admin_username = var.boundary_admin_username
+  boundary_admin_password = var.boundary_admin_password
+  my_email = var.my_email
 }

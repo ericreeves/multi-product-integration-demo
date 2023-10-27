@@ -1,9 +1,5 @@
 terraform {
   required_providers {
-    doormat = {
-      source  = "doormat.hashicorp.services/hashicorp-security/doormat"
-    }
-
     aws = {
       source  = "hashicorp/aws"
       version = "~> 5.8.0"
@@ -16,40 +12,18 @@ terraform {
 
     vault = {
       source = "hashicorp/vault"
-      version = "~> 3.18.0"
+      version = "~> 3.21.0"
     }
   }
 }
 
-provider "doormat" {}
-
-data "doormat_aws_credentials" "creds" {
-  provider = doormat
-  role_arn = "arn:aws:iam::365006510262:role/tfc-doormat-role_4_boundary-config"
+provider "vault" {
+  address = var.vault_addr
+  token = var.vault_token
 }
-
-provider "aws" {
-  region     = var.region
-  access_key = data.doormat_aws_credentials.creds.access_key
-  secret_key = data.doormat_aws_credentials.creds.secret_key
-  token      = data.doormat_aws_credentials.creds.token
-}
-
-data "terraform_remote_state" "hcp_clusters" {
-  backend = "remote"
-
-  config = {
-    organization = var.tfc_organization
-    workspaces = {
-      name = "2_hcp-clusters"
-    }
-  }
-}
-
-provider "vault" {}
 
 provider "boundary" {
-  addr  = data.terraform_remote_state.hcp_clusters.outputs.boundary_public_endpoint
+  addr  = var.boundary_addr
   auth_method_login_name = var.boundary_admin_username
   auth_method_password   = var.boundary_admin_password
 }
