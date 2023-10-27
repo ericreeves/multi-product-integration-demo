@@ -38,6 +38,4 @@ module "networking" {
   source = "./networking"
   region = var.region
   stack_id = var.stack_id
-  hcp_client_id = var.hcp_client_id
-  hcp_client_secret = var.hcp_client_secret
 }
