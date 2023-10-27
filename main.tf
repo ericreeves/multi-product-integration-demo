@@ -17,23 +17,21 @@ terraform {
   }
 }
 
-variable "region" {
-  type = string
-  default = "us-east-2"
+data "doormat_aws_credentials" "creds" {
+  provider = doormat
+  role_arn = "arn:aws:iam::365006510262:role/tfc-doormat-role_multi-product-integration-demo"
 }
 
-variable "stack_id" {
-    type = string
-    default = "hashistack"
+provider "aws" {
+  region     = var.region
+  access_key = data.doormat_aws_credentials.creds.access_key
+  secret_key = data.doormat_aws_credentials.creds.secret_key
+  token      = data.doormat_aws_credentials.creds.token
 }
 
-variable "hcp_client_id" {
-    type = string
-}
-
-variable "hcp_client_secret" {
-  type = string
-  sensitive = true
+provider "hcp" {
+  client_id = var.hcp_client_id
+  client_secret = var.hcp_client_secret
 }
 
 module "networking" {
