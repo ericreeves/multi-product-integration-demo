@@ -44,7 +44,7 @@ module "networking" {
 module "hcp_clusters" {
   source = "./hcp-clusters"
   stack_id = var.stack_id
-  hvn_id = module.networking.outputs.hvn_id
+  hvn_id = module.networking.output.hvn_id
   boundary_admin_username = var.boundary_admin_username
   boundary_admin_password = var.boundary_admin_password
 }
