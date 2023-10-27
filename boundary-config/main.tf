@@ -20,6 +20,8 @@ terraform {
 provider "vault" {
   address = var.vault_addr
   token = var.vault_token
+  skip_get_vault_version = true
+  skip_child_token = true
 }
 
 provider "boundary" {
