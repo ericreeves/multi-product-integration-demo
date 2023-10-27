@@ -7,8 +7,6 @@ terraform {
   }
 }
 
-provider "hcp" {}
-
 resource "hcp_vault_cluster" "hashistack" {
   cluster_id      = "${var.stack_id}-vault-cluster"
   hvn_id          = var.hvn_id
