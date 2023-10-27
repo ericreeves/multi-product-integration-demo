@@ -20,3 +20,12 @@ variable "hcp_client_secret" {
 variable "hcp_project_id" {
   type = string
 }
+
+variable "boundary_admin_username" {
+  type = string
+}
+
+variable "boundary_admin_password" {
+  type = string
+  sensitive = true
+}
