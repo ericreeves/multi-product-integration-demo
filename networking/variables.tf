@@ -2,6 +2,15 @@
 #   type = string
 # }
 
+variable "hcp_client_id" {
+  type = string
+}
+
+variable "hcp_client_secret" {
+  type = string
+  sensitive = true
+}
+
 variable "stack_id" {
   type        = string
   description = "The name of your stack"

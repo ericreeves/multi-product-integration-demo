@@ -21,7 +21,7 @@ provider "doormat" {}
 
 data "doormat_aws_credentials" "creds" {
   provider = doormat
-  role_arn = "arn:aws:iam::365006510262:role/tfc-doormat-role_1_networking"
+  role_arn = "arn:aws:iam::365006510262:role/tfc-doormat-role_refactor-simplified"
 }
 
 provider "aws" {
@@ -31,7 +31,10 @@ provider "aws" {
   token      = data.doormat_aws_credentials.creds.token
 }
 
-provider "hcp" {}
+provider "hcp" {
+  client_id = var.hcp_client_id
+  client_secret = var.hcp_client_secret
+}
 
 data "aws_availability_zones" "available" {
   filter {

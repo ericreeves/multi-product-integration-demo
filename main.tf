@@ -27,8 +27,19 @@ variable "stack_id" {
     default = "hashistack"
 }
 
+variable "hcp_client_id" {
+    type = string
+}
+
+variable "hcp_client_secret" {
+  type = string
+  sensitive = true
+}
+
 module "networking" {
   source = "./networking"
   region = var.region
   stack_id = var.stack_id
+  hcp_client_id = var.hcp_client_id
+  hcp_client_secret = var.hcp_client_secret
 }
