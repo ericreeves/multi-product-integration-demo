@@ -1,14 +1,10 @@
-# variable "tfc_organization" {
-#   type = string
-# }
-
 variable "stack_id" {
   type        = string
   description = "The name of your stack"
 }
 
-variable "tfc_organization" {
-  type    = string
+variable "hvn_id" {
+  type = string
 }
 
 variable "boundary_admin_username" {

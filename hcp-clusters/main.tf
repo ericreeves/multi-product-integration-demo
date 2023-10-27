@@ -9,27 +9,16 @@ terraform {
 
 provider "hcp" {}
 
-data "terraform_remote_state" "networking" {
-  backend = "remote"
-
-  config = {
-    organization = var.tfc_organization
-    workspaces = {
-      name = "1_networking"
-    }
-  }
-}
-
 resource "hcp_vault_cluster" "hashistack" {
   cluster_id      = "${var.stack_id}-vault-cluster"
-  hvn_id          = data.terraform_remote_state.networking.outputs.hvn_id
+  hvn_id          = var.hvn_id
   tier            = var.vault_cluster_tier
   public_endpoint = true
 }
 
 resource "hcp_consul_cluster" "hashistack" {
   cluster_id      = "${var.stack_id}-consul-cluster"
-  hvn_id          = data.terraform_remote_state.networking.outputs.hvn_id
+  hvn_id          = var.hvn_id
   tier            = var.consul_cluster_tier
   public_endpoint = true
   connect_enabled = true
