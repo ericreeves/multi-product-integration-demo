@@ -153,7 +153,7 @@ resource "vault_token" "boundary_controller" {
 resource "boundary_credential_store_vault" "vault" {
   name        = "foo"
   description = "My first Vault credential store!"
-  address     = data.terraform_remote_state.hcp_clusters.outputs.vault_public_endpoint
+  address     = var.vault_addr
   token       = vault_token.boundary_controller.client_token 
   scope_id    = boundary_scope.project.id
   namespace   = "admin"
